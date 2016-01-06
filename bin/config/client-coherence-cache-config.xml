@@ -1,0 +1,65 @@
+<?xml version="1.0"?>
+
+<cache-config>>
+	<caching-scheme-mapping>
+		<cache-mapping>
+			<cache-name>customers</cache-name>
+			<scheme-name>remote</scheme-name>
+		</cache-mapping>
+	</caching-scheme-mapping>
+
+	<caching-schemes>
+		<remote-cache-scheme>
+			<scheme-name>remote</scheme-name>
+			<service-name>ExtendTcpCacheService</service-name>
+			<initiator-config>
+				<tcp-initiator>
+					<remote-addresses>
+						<socket-address>
+							<address>127.0.0.1</address>
+							<port>8082</port>
+						</socket-address>
+						<socket-address>
+							<address>127.0.0.1</address>
+							<port>8083</port>
+						</socket-address>
+					</remote-addresses>
+					<connect-timeout>10s</connect-timeout>
+				</tcp-initiator>
+				<outgoing-message-handler>
+					<request-timeout>5s</request-timeout>
+				</outgoing-message-handler>
+				 <serializer>
+					<instance>
+						<class-name>com.tangosol.io.pof.ConfigurablePofContext</class-name>
+						<init-params>
+							<init-param>
+								<param-type>string</param-type>
+								<param-value>config/pof-config-client.xml</param-value>
+							</init-param>
+						</init-params>
+					</instance>
+				</serializer>
+			</initiator-config>
+		</remote-cache-scheme>
+
+		<remote-invocation-scheme>
+			<scheme-name>extend-invocation</scheme-name>
+			<service-name>ExtendTcpInvocationService</service-name>
+			<initiator-config>
+				<tcp-initiator>
+					<remote-addresses>
+						<socket-address>
+							<address>localhost</address>
+							<port>8082</port>
+						</socket-address>
+					</remote-addresses>
+					<connect-timeout>10s</connect-timeout>
+				</tcp-initiator>
+				<outgoing-message-handler>
+					<request-timeout>5s</request-timeout>
+				</outgoing-message-handler>
+			</initiator-config>
+		</remote-invocation-scheme>
+	</caching-schemes>
+</cache-config>
